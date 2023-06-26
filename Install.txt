@@ -24,6 +24,8 @@ exit
 
 # Make sure powershell 7 is installed
 
+write-output "Testing if PowerShell 7 is installed"
+
 try{
 start-process "pwsh.exe" -windowstyle hidden
 write-output "PowerShell 7 is installed"
