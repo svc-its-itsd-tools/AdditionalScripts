@@ -80,3 +80,5 @@ exit
 git -c http.sslVerify=false clone https://bitbucket.corp.chartercom.com/scm/~svc-its-itsd-tools/itsdprotoolsinstaller.git C:\ITSDProToolsGitInstaller
 
 start-process powershell.exe C:\ITSDProToolsGitInstaller\GitInstall.ps1
+
+exit
