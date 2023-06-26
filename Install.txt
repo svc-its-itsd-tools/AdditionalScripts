@@ -1,0 +1,80 @@
+# this script will guide you through the full installation of ITSD Pro Tools
+# this script will also be designed to be able to be run from anywhere - including the run dialog box and or CMD!
+
+clear-host
+
+write-output "Testing if Git is installed"
+
+start-sleep -seconds 2
+
+# make sure Git is installed
+
+try
+{
+git | Out-Null
+"Git is installed"
+}
+catch [System.Management.Automation.CommandNotFoundException]
+{
+"Git is NOT installed."
+Pause
+start-process "softwarecenter:SoftwareID=ScopeId_2598BF96-ABED-44C2-8E2B-21ED8AEFD236/Application_c59aedc4-e028-4de0-9b91-52220956fbfc"
+exit
+}
+
+# Make sure powershell 7 is installed
+
+try{
+start-process "pwsh.exe" -windowstyle hidden
+write-output "PowerShell 7 is installed"
+}
+catch{
+write-output "PowerShell 7 is not installed"
+
+if(test-path "C:\Temp"){
+# temp folder exists - do nothing
+}else{
+mkdir C:\Temp | out-null
+}
+
+# this section puts the current date in a text file - this way I can determine next time this is run if you rebooted your computer since the last time you installed pwsh7
+
+get-date | out-file C:\Temp\currentdate.txt
+
+# open software center to powershell 7
+
+write-output "After installing PowerShell 7, please reboot your PC"
+
+pause
+
+start-process "softwarecenter:SoftwareID=ScopeId_2598BF96-ABED-44C2-8E2B-21ED8AEFD236/Application_4717a349-81cf-4f29-8d19-05134cf72845"
+
+exit
+}
+
+if(Test-path C:\Temp\currentdate.txt){
+
+$lastboot = (Get-CimInstance -ClassName win32_operatingsystem | select lastbootuptime).lastbootuptime
+$lastrun = get-content -raw C:\Temp\currentdate.txt
+
+$lastrun = [datetime]$lastrun
+$lastboot = [datetime]$lastboot
+
+$data = $lastboot - $lastrun
+
+if($data -gt 0){
+remove-item C:\Temp\currentdate.txt -force
+# proceed with install
+}else{
+write-warning "You must reboot your computer before proceeding with the install"
+pause
+exit
+}
+}
+
+# if the script makes it down to here that means powershell 7 and Git are installed and a reboot has been performed
+
+
+git -c http.sslVerify=false clone https://bitbucket.corp.chartercom.com/scm/~svc-its-itsd-tools/itsdprotoolsinstaller.git C:\ITSDProToolsGitInstaller
+
+start-process powershell.exe C:\ITSDProToolsGitInstaller\GitInstall.ps1
