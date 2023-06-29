@@ -1,0 +1,21 @@
+# clear the console
+
+clear-host
+
+# set main tool colors
+
+"#c35548" > "C:\ITSDProToolsData\ScriptFiles\Background.txt"
+"#fbe2c8" > "C:\ITSDProToolsData\ScriptFiles\BackgroundText.txt"
+"#fbe2c8" > "C:\ITSDProToolsData\ScriptFiles\Button.txt"
+"#741b38" > "C:\ITSDProToolsData\ScriptFiles\ButtonText.txt"
+
+# set ADM tool colors
+
+"#025249" > "C:\ITSDProToolsData\ADMFiles\Background.txt"
+"#fbe2c8" > "C:\ITSDProToolsData\ADMFiles\Button.txt"
+"#fbe2c8" > "C:\ITSDProToolsData\ADMFiles\BackgroundText.txt"
+"#741b38" > "C:\ITSDProToolsData\ADMFiles\ButtonText.txt"
+
+# close the window
+
+exit
